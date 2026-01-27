@@ -15,3 +15,6 @@ First Phase (1-3 months) $8000 (Launch)
 * $3,000 - Coffee beans (Purchase from Africa)
 * $1,000 - Marketing for B2B (Zebra Coffee, Expresso daily, etc)
 * $500 - Registration (Trademark, TOO ...)
+
+# Summary of Business Model:
+We aren't just building an app; we are investing nearly half of our budget ($20,000+) into real coffee beans. This means our project is backed by actual products sitting in our warehouse in Astana. Unlike 'software-only' startups, your investment is tied to a real-world product that people buy and drink every single day. It’s safer, simpler, and much more grounded.
