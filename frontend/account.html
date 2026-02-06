@@ -1,11 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coffee Token</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account - Coffee Token</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Account Page</h1>
+
+<nav>
+    <a href="index.html">Shop</a>
+    <a href="account.html">Account</a>
+</nav>
+
+<div class="container">
+    <h1>My Account</h1>
+
+    <button class="btn btn-connect" onclick="alert('Connecting MetaMask...')">Connect MetaMask</button>
+
+    <div class="info-box">
+        <span class="label">Wallet Address:</span>
+        <span id="address">0x00000...0000</span>
+    </div>
+
+    <div class="info-box">
+        <span class="label">Token Balance:</span>
+        <span id="cft-balance">0.00 CFT</span>
+    </div>
+</div>
+
 </body>
 </html>
