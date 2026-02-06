@@ -3,30 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coffee Token Shop</title>
+    <title>Coffee Bean Co.</title>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/5895/5895213.png" type="image/png">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<nav>
-    <a href="index.html">Shop</a>
-    <a href="account.html">Account</a>
-</nav>
+<header>
+    <div class="top-bar">
+        <div>
+            <a href="#">About Us</a>
+            <a href="#">Delivery</a>
+            <a href="#">Contacts</a>
+        </div>
+        <div>
+            <input type="text" placeholder="Search..." style="padding: 5px; border-radius: 15px; border: none;">
+        </div>
+    </div>
+
+    <div class="header-main">
+        <div class="logo-circle">
+            <img src="https://cdn-icons-png.flaticon.com/512/5895/5895213.png" width="35" alt="Logo">
+        </div>
+        <h1>Coffee Bean Co.</h1>
+    </div>
+
+    <nav class="nav-menu">
+        <a href="#" class="active">Shop</a>
+        <a href="#">Account</a>
+        <a href="#">Cart</a>
+    </nav>
+</header>
+
+<div class="features-bar">
+    <span>Fast Shipping</span>
+    <span>Freshly Roasted</span>
+    <span>Premium Quality</span>
+</div>
 
 <div class="container">
-    <h1>Roasted beans</h1>
-    <h2>Crypto-Marketplace for coffee shops</h2>
-    <div class="product-card">
-        <img src="https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcROWu73t0MJfj8dgLH99MLr3EYH8pPj2RFUQ1QFg5JDv3re8x6P6k9Jz0BVbzvgp-D7vmD-ZRMKrxy4bQsx0n68lX_SJwI3daUAbhZgMk4CgP4nEP2px-YzqiJ9qOmLNu0MDyX8YbA&usqp=CAc" alt="Coffee Bag">
-        <h2>Premium Roasted Beans (1kg)</h2>
-        <p>Directly from the producer. Best quality for coffee shops.</p>
+    <div class="product-list">
         
-        <div class="price-info">
-            <!-- <p>Market Price: <span class="market-price">13,000 kzt</span></p> -->
-            <p>Price: <span class="our-price">12,500 CFT</span></p>
+        <div class="product-card">
+            <img src="https://images.satu.kz/231983678_w640_h640_kofe-svezheobzharennyj-espresso.jpg" alt="Ethiopia">
+            <h3>Ethiopia Yirgacheffe</h3>
+            <p class="description">description...</p>
+            <div class="price">
+                25 CFT<img src="https://cdn-icons-png.flaticon.com/512/5895/5895213.png" class="crypto-icon" alt="CFT">
+            </div>
+            <button class="btn-buy">Add to Cart</button>
         </div>
 
-        <button class="btn" onclick="alert('Proceeding to buy 1kg of coffee...')">Buy 1kg Bag</button>
+        <div class="product-card">
+            <img src="https://sun1-30.userapi.com/impg/RBQ7quW7Y811RxDd9-dNilgYVKPMM2C9gBD9Nw/zkAA9txAQRA.jpg?size=520x0&quality=95&sign=59382eb72792c4fbb9796867f37abafd" alt="Espresso">
+            <h3>Espresso Blend</h3>
+            <p class="description">description...</p>
+            <div class="price">
+                30 CFT<img src="https://cdn-icons-png.flaticon.com/512/5895/5895213.png" class="crypto-icon" alt="CFT">
+            </div>
+            <button class="btn-buy">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+            <img src="https://www.serikovcoffee.kz/storage/products/1/5/3/2/1/828/photo/middle_f454443f63a41b30.jpg" alt="House Blend">
+            <h3>House Blend</h3>
+            <p class="description">description...</p>
+            <div class="price">
+                35 CFT<img src="https://cdn-icons-png.flaticon.com/512/5895/5895213.png" class="crypto-icon" alt="CFT">
+            </div>
+            <button class="btn-buy">Add to Cart</button>
+        </div>
+
     </div>
 </div>
 
