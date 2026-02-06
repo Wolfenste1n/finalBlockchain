@@ -1,11 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Crowdfunding</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Token</title>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/5895/5895213.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+<header>
   
+
+    <div class="header-main">
+        <div class="logo-circle">
+            <img src="https://cdn-icons-png.flaticon.com/512/5895/5895213.png" width="35" alt="Logo">
+        </div>
+        <h1>Coffee Token</h1>
+    </div>
+
+    <nav class="nav-menu">
+        <a href="index.html">Shop</a>
+        <a href="account.html" class="active">Account</a>
+        <a href="crowdfunding.html">Crowdfunding</a>
+    </nav>
+</header>
+
+<div class="features-bar">
+    <span>Fast Shipping</span>
+    <span>Freshly Roasted</span>
+    <span>Premium Quality</span>
+</div>
+<h1>Crowdfunding</h1>
+<div class="container">
+    <h1>My Account</h1>
+
+    <button class="btn btn-connect" onclick="alert('Connecting MetaMask...')">Connect MetaMask</button>
+
+    <div class="info-box">
+        <span class="label">Wallet Address:</span>
+        <span id="address">0x00000...0000</span>
+    </div>
+
+    <div class="info-box">
+        <span class="label">Token Balance:</span>
+        <span id="cft-balance">0.00 CFT</span>
+    </div>
+
 </body>
 </html>
