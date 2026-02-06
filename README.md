@@ -3,16 +3,30 @@
 Group SE-2407 
 Kenzhebayev Madiyar, Aldiyar Amangeldi and Aliya Gabidulaeva
 
+![business model Coffee TOken ($CFT)](https://github.com/user-attachments/assets/e54e9f5f-b1a5-4231-8936-ce59352727d1)
+
 # Business Model
-1.CoffeeToken (CFT) Ecosystem
-CoffeeToken is a decentralized loyalty and supply chain solution that creates a "win-win-win" scenario for consumers, coffee shop owners, and suppliers.
-* For Consumers: Access to a 10% cashback/discount and a unique loyalty asset ($CFT).
+CoffeeToken (CFT) Ecosystem
+* A decentralized ecosystem connecting coffee suppliers, coffee shops, and consumers via a blockchain utility token to reduce operational costs and maximize loyalty.
 
-* For Coffee Shops: Ability to purchase high-quality coffee beans at prices lower than the market average by using $CFT.
+# How will we use the investment?
+First Phase (1-6 months) $8000 (Launch)
+* $3,500 — Product Development (dev team, servers...)
+* $3,000 - Coffee beans (Purchase from Africa)
+* $1,000 - Marketing for B2B (Zebra Coffee, Expresso daily, etc)
+* $500 - Registration (Trademark, TOO ...)
 
-* For the Platform: Sustainable revenue through transaction fees and ecosystem growth.
+Second Phase (6-12 months) $ ()
+*
+*
+*
+*
 
-2.The Circular Economy 
-* Funding Phase: Users contribute ETH to the Crowdfunding contract to support the network's growth.
-* Token Issuance: In return, users automatically receive $CFT (ERC-20) tokens.
-* Consumer Utility: Users spend $CFT at partner coffee shops. Each purchase grants a 10% cashback in tokens, incentivizing repeat visits.
+Third Phase (12-18 months) $ ()
+*
+*
+*
+*
+
+# Summary of Business Model:
+We aren't just building an app; we are investing nearly half of our budget ($20,000+) into real coffee beans. This means our project is backed by actual products sitting in our warehouse in Astana. Unlike 'software-only' startups, your investment is tied to a real-world product that people buy and drink every single day. It’s safer, simpler, and much more grounded.
