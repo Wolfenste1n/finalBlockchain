@@ -35,7 +35,7 @@
 <div class="container">
     <h1>My Account</h1>
 
-    <button class="btn btn-connect" onclick="alert('Connecting MetaMask...')">Connect MetaMask</button>
+    <button class="btn btn-connect" id="connectBtn">Connect MetaMask</button>
 
     <div class="info-box">
         <span class="label">Wallet Address:</span>
@@ -48,4 +48,8 @@
     </div>
 
 </body>
+<script src="https://cdn.jsdelivr.net/npm/ethers/dist/ethers.min.js"></script>
+<script src="config.js"></script>
+<script src="app.js"></script>
+<script>document.getElementById('connectBtn').addEventListener('click', connect);</script>
 </html>
