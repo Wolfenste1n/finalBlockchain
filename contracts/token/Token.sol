@@ -26,7 +26,7 @@ contract Token is ERC20, ERC20Burnable, Ownable {
         address initialOwner
     ) ERC20(name, symbol) Ownable(initialOwner) {
         if (initialSupply > 0) {
-            _mint(initialOwner, amount);
+            _mint(initialOwner, initialSupply);
         }
     }
 
