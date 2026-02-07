@@ -1,4 +1,5 @@
 let provider, signer, tokenContract;
+let isInitialized = false;
 
 function saveConnectionState(account, tokenAddress) {
   localStorage.setItem('web3_connected', 'true');
@@ -44,7 +45,6 @@ async function restoreConnectionIfNeeded() {
     }
   }
   
-  clearConnectionState();
   return false;
 }
 
@@ -77,145 +77,26 @@ async function quickConnect() {
     tokenContract = new ethers.Contract(state.tokenAddress, abi, signer);
     
     updateUI();
-    setupEventListeners();
     
     return true;
     
   } catch (err) {
     console.error('Quick connect failed:', err);
-    clearConnectionState();
     return false;
   }
 }
 
 function updateUI() {
-  if (signer && tokenContract) {
-    const addrEl = document.getElementById('address');
-    if (addrEl) {
-      signer.getAddress().then(account => {
-        addrEl.textContent = account;
-      });
-    }
-    
-    updateBalance();
-  }
-}
-
-window.switchToLocalNetwork = async function() {
-  try {
-    await window.ethereum.request({
-      method: 'wallet_switchEthereumChain',
-      params: [{ chainId: '0x7A69' }]
+  if (!signer || !tokenContract) return;
+  
+  const addrEl = document.getElementById('address');
+  if (addrEl) {
+    signer.getAddress().then(account => {
+      addrEl.textContent = account;
     });
-  } catch (switchError) {
-    if (switchError.code === 4902) {
-      try {
-        await window.ethereum.request({
-          method: 'wallet_addEthereumChain',
-          params: [{
-            chainId: '0x7A69',
-            chainName: 'Hardhat Local',
-            nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
-            rpcUrls: ['http://127.0.0.1:8545'],
-            blockExplorerUrls: []
-          }]
-        });
-      } catch (addError) {
-        console.error('Failed to add network:', addError);
-      }
-    }
   }
-}
-
-window.connect = async function connect() {
-  try {
-    if (!window.ethereum) {
-      alert('Install MetaMask');
-      return;
-    }
-
-    await switchToLocalNetwork();
-    
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    await window.ethereum.request({ method: 'eth_requestAccounts' });
-    provider = new ethers.BrowserProvider(window.ethereum);
-    signer = await provider.getSigner();
-
-    const network = await provider.getNetwork();
-    console.log('Network ID:', Number(network.chainId));
-    
-    if (Number(network.chainId) !== 31337) {
-      alert('Still on wrong network. Please switch manually to localhost.');
-      return;
-    }
-
-    const account = await signer.getAddress();
-    
-    const tokenAddr = window.APP_CONFIG && window.APP_CONFIG.tokenAddress;
-    if (tokenAddr) {
-      saveConnectionState(account, tokenAddr);
-    }
-
-    const addrEl = document.getElementById('address');
-    if (addrEl) addrEl.textContent = account;
-
-    const abiResp = await fetch('../MyToken-ABI.json');
-    const abi = await abiResp.json();
-
-    if (!tokenAddr) {
-      alert('Set tokenAddress in config.js');
-      return;
-    }
-
-    const code = await provider.getCode(tokenAddr);
-    if (code === '0x') {
-      const defaultAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
-      const defaultCode = await provider.getCode(defaultAddress);
-      
-      if (defaultCode !== '0x') {
-        alert(`Contract found at default address: ${defaultAddress}\nUpdate your config.js`);
-        return;
-      }
-      
-      alert('No contract found. Make sure:\n1. Hardhat node is running\n2. Contract is deployed');
-      return;
-    }
-
-    tokenContract = new ethers.Contract(tokenAddr, abi, signer);
-
-    try {
-      await tokenContract.decimals();
-      await tokenContract.symbol();
-      await updateBalance();
-    } catch {
-      alert('Contract test failed. Check ABI.');
-      return;
-    }
-
-    setupEventListeners();
-
-  } catch (err) {
-    console.error(err);
-    alert('Connect failed: ' + err.message);
-  }
-}
-
-function setupEventListeners() {
-  if (!window.ethereum) return;
   
-  window.ethereum.on('accountsChanged', (accounts) => {
-    if (accounts.length === 0) {
-      clearConnectionState();
-      location.reload();
-    } else {
-      updateUI();
-    }
-  });
-  
-  window.ethereum.on('chainChanged', () => {
-    location.reload();
-  });
+  updateBalance();
 }
 
 async function updateBalance() {
@@ -237,49 +118,107 @@ async function updateBalance() {
     
   } catch (err) {
     console.error('Balance error:', err);
-    
-    if (err.code === 'BAD_DATA' && err.data === '0x') {
-      await tryDirectCall();
-    }
-  }
-}
-
-async function tryDirectCall() {
-  try {
-    const account = await signer.getAddress();
-    const tokenAddr = tokenContract.target;
-    
-    const balanceOfInterface = new ethers.Interface([
-      "function balanceOf(address) view returns (uint256)"
-    ]);
-    
-    const data = balanceOfInterface.encodeFunctionData("balanceOf", [account]);
-    const result = await provider.call({ to: tokenAddr, data: data });
-    
-    if (result === '0x') {
-      console.error('Direct call failed');
-      return;
-    }
-    
-    const decoded = balanceOfInterface.decodeFunctionResult("balanceOf", result);
-    const balance = decoded[0];
-    const decimals = await tokenContract.decimals();
-    let human = ethers.formatUnits(balance, decimals);
-    
-    human = parseFloat(human).toLocaleString('en-US', {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 2
-    });
-    
-    const balEl = document.getElementById('cft-balance');
-    if (balEl) balEl.textContent = `${human} CFT`;
-    
-  } catch (altErr) {
-    console.error('Direct call failed:', altErr);
   }
 }
 
 window.updateBalance = updateBalance;
+
+window.connect = async function connect() {
+  try {
+    if (!window.ethereum) {
+      alert('Install MetaMask');
+      return;
+    }
+
+    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+    if (accounts.length === 0) return;
+    
+    provider = new ethers.BrowserProvider(window.ethereum);
+    signer = await provider.getSigner();
+
+    const network = await provider.getNetwork();
+    if (Number(network.chainId) !== 31337) {
+      try {
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: '0x7A69' }]
+        });
+      } catch (switchError) {
+        if (switchError.code === 4902) {
+          await window.ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params: [{
+              chainId: '0x7A69',
+              chainName: 'Hardhat Local',
+              nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+              rpcUrls: ['http://127.0.0.1:8545']
+            }]
+          });
+        }
+      }
+      
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      location.reload();
+      return;
+    }
+
+    const account = await signer.getAddress();
+    
+    const tokenAddr = window.APP_CONFIG && window.APP_CONFIG.tokenAddress;
+    if (tokenAddr) {
+      saveConnectionState(account, tokenAddr);
+    }
+
+    const addrEl = document.getElementById('address');
+    if (addrEl) addrEl.textContent = account;
+
+    const abiResp = await fetch('../MyToken-ABI.json');
+    const abi = await abiResp.json();
+
+    if (!tokenAddr) {
+      alert('Set tokenAddress in config.js');
+      return;
+    }
+
+    tokenContract = new ethers.Contract(tokenAddr, abi, signer);
+
+    try {
+      await tokenContract.decimals();
+      await tokenContract.symbol();
+      
+      await updateBalance();
+    } catch {
+      alert('Contract test failed. Check ABI.');
+      return;
+    }
+
+    setupEventListeners();
+    isInitialized = true;
+
+  } catch (err) {
+    console.error(err);
+    alert('Connect failed: ' + err.message);
+  }
+}
+
+function setupEventListeners() {
+  if (!window.ethereum) return;
+  
+  window.ethereum.on('accountsChanged', (accounts) => {
+    if (accounts.length === 0) {
+      clearConnectionState();
+      location.reload();
+    } else {
+      setTimeout(() => {
+        updateUI();
+      }, 100);
+    }
+  });
+  
+  window.ethereum.on('chainChanged', () => {
+    location.reload();
+  });
+}
 
 function attachBuyButtons() {
   const buttons = document.querySelectorAll('.btn-buy');
@@ -303,6 +242,15 @@ function attachBuyButtons() {
   });
 }
 
+function attachBlockchainButton() {
+  const blockchainBtn = document.querySelector('button[onclick="checkBlockchainBalance()"]');
+  if (blockchainBtn) {
+    blockchainBtn.addEventListener('click', async () => {
+      await window.checkBlockchainBalance();
+    });
+  }
+}
+
 window.buy = async function buy(name, price) {
   try {
     if (!tokenContract) {
@@ -316,33 +264,62 @@ window.buy = async function buy(name, price) {
       return;
     }
 
+    const account = await signer.getAddress();
+    const balance = await tokenContract.balanceOf(account);
     const decimals = await tokenContract.decimals();
     const amount = ethers.parseUnits(String(price), decimals);
+    
+    if (balance < amount) {
+      alert(`Insufficient balance. You have ${ethers.formatUnits(balance, decimals)} CFT`);
+      return;
+    }
 
     const tx = await tokenContract.transfer(shopAddr, amount);
+    
     const receipt = await tx.wait();
-    alert(`Purchased ${name} for ${price} CFT\nTx: ${receipt.transactionHash}`);
+    
     await updateBalance();
+    
+    alert(`Purchased ${name} for ${price} CFT\nTx: ${receipt.transactionHash}`);
+    
   } catch (err) {
     console.error('Buy error:', err);
-    alert('Purchase failed: ' + err.message);
+    
+    if (err.code === 'ACTION_REJECTED') {
+      alert('Transaction was rejected');
+    } else if (err.message.includes('user rejected')) {
+      alert('You rejected the transaction');
+    } else {
+      alert('Purchase failed: ' + err.message);
+    }
   }
 }
 
-async function init() {
+async function initPage() {
   attachBuyButtons();
-  await restoreConnectionIfNeeded();
+  attachBlockchainButton();
   
-  const connectBtn = document.querySelector('[onclick="connect()"]');
+  const restored = await restoreConnectionIfNeeded();
+  
+  if (restored) {
+    console.log('Connection restored');
+  }
+  
+  const connectBtn = document.getElementById('connectBtn');
   if (connectBtn) {
     connectBtn.disabled = false;
   }
+  
+  isInitialized = true;
 }
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', init);
-} else {
-  init();
+window.refreshBalance = async function() {
+  try {
+    await updateBalance();
+    alert('Balance refreshed');
+  } catch (err) {
+    console.error('Refresh error:', err);
+  }
 }
 
 window.disconnect = function() {
@@ -359,3 +336,68 @@ window.disconnect = function() {
   
   alert('Disconnected successfully');
 };
+
+window.checkBlockchainBalance = async function() {
+  try {
+    if (!tokenContract || !signer) {
+      alert('Connect first');
+      return;
+    }
+
+    const account = await signer.getAddress();
+    const shopAddr = window.APP_CONFIG && window.APP_CONFIG.shopAddress;
+    
+    if (!shopAddr) {
+      alert('Shop address not set');
+      return;
+    }
+
+    const yourBalance = await tokenContract.balanceOf(account);
+    const shopBalance = await tokenContract.balanceOf(shopAddr);
+    const decimals = await tokenContract.decimals();
+    
+    console.log('Blockchain balance check:');
+    console.log('Account:', account);
+    console.log('Shop address:', shopAddr);
+    console.log('Your balance:', ethers.formatUnits(yourBalance, decimals), 'CFT');
+    console.log('Shop balance:', ethers.formatUnits(shopBalance, decimals), 'CFT');
+    
+    try {
+      const filter = tokenContract.filters.Transfer(account, shopAddr);
+      const events = await tokenContract.queryFilter(filter);
+      console.log('Transfers to shop:', events.length);
+      
+      if (events.length > 0) {
+        events.forEach((event, i) => {
+          console.log(`Transfer ${i + 1}:`, {
+            amount: ethers.formatUnits(event.args.value, decimals) + ' CFT',
+            txHash: event.transactionHash,
+            block: event.blockNumber
+          });
+        });
+      }
+    } catch (filterErr) {
+      console.log('Could not get transfer events:', filterErr.message);
+    }
+    
+  } catch (err) {
+    console.error('Balance check failed:', err);
+  }
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initPage);
+} else {
+  initPage();
+}
+
+window.addEventListener('storage', function(event) {
+  if (event.key === 'web3_account' || event.key === 'web3_connected') {
+    console.log('Storage updated');
+    if (!isInitialized) {
+      setTimeout(() => {
+        restoreConnectionIfNeeded();
+      }, 100);
+    }
+  }
+});
