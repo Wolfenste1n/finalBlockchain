@@ -23,11 +23,11 @@ Second Phase (6-12 months) $28,000 (Expansion)
 * $4,000 — B2C Marketing(to reach 3,500+ active users)
 * $2,000 — Logistics & Warehousing(supply chain and storage in Astana)
 
-Third Phase (12-18 months) $ ()
-*
-*
-*
-*
+Third Phase (12-18 months) $45,0000 (Market Leadership)
+* $22,000 — Global Supply Chain(import value)
+* $10,000 — Strategic Partnerships(Zebra Coffee, Expresso, Master Coffee, e.t.c)
+* $8,000 — Ecosystem Growth(hardware integrations for shops)
+* $5,000 — Operational Reserves(scaling, taxes and team expansion)
 
 # Summary of Business Model:
 We aren't just building an app; we are investing nearly half of our budget ($20,000+) into real coffee beans. This means our project is backed by actual products sitting in our warehouse in Astana. Unlike 'software-only' startups, your investment is tied to a real-world product that people buy and drink every single day. It’s safer, simpler, and much more grounded.
