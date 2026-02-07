@@ -1,6 +1,6 @@
 const hre = require("hardhat");
 async function main() {
-    const tokenAddress = process.env.TOKEN_ADDRESS;
+    const tokenAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
     const Crowdfunding = await hre.ethers.getContractFactory("Crowdfunding");
     const goal = hre.ethers.parseEther("8000");
     const duration = 180 * 24 * 60 * 60; // 6 month in seconds
@@ -8,6 +8,6 @@ async function main() {
     await crowdfunding.waitForDeployment();
     console.log("Crowdfunding deployed to:", await crowdfunding.getAddress());
 }
-main().catch((error) => {    console.error(error);
+main().catch((error) => {    console.error(error)
     process.exitCode = 1;
 });
