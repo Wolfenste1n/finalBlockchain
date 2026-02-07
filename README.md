@@ -10,17 +10,18 @@ CoffeeToken (CFT) Ecosystem
 * A decentralized ecosystem connecting coffee suppliers, coffee shops, and consumers via a blockchain utility token to reduce operational costs and maximize loyalty.
 
 # How will we use the investment?
+
 First Phase (1-6 months) $8000 (Launch)
 * $3,500 — Product Development (dev team, servers...)
 * $3,000 - Coffee beans (Purchase from Africa)
 * $1,000 - Marketing for B2B (Zebra Coffee, Expresso daily, etc)
 * $500 - Registration (Trademark, TOO ...)
 
-Second Phase (6-12 months) $ ()
-*
-*
-*
-*
+Second Phase (6-12 months) $28,000 (Expansion)
+* $8,000 — Inventory Scaling(coffee beans for 80+ partner shops)
+* $6,000 — Platform Optimization(blockchain features and automated loyalty rewards)
+* $4,000 — B2C Marketing(to reach 3,500+ active users)
+* $2,000 — Logistics & Warehousing(supply chain and storage in Astana)
 
 Third Phase (12-18 months) $ ()
 *
