@@ -7,6 +7,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 /**
  * @title Token
+ * @notice uint256 amount = initialSupply * 10 ** decimals();
  * @notice A generic ERC20 token contract that can be deployed with any name and symbol
  * @dev Built with OpenZeppelin contracts - supports burning and owner-controlled minting
  */
@@ -25,7 +26,6 @@ contract Token is ERC20, ERC20Burnable, Ownable {
         address initialOwner
     ) ERC20(name, symbol) Ownable(initialOwner) {
         if (initialSupply > 0) {
-            uint256 amount = initialSupply * 10 ** decimals();
             _mint(initialOwner, amount);
         }
     }
