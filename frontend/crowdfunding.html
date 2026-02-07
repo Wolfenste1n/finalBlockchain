@@ -33,19 +33,28 @@
 </div>
 <h1>Crowdfunding</h1>
 <div class="container">
-    <h1>My Account</h1>
+    <h1>Community Crowdfunding</h1>
+    <p style="text-align: center; color: #a67c52;">Support our expansion to new coffee shops and get $CFT rewards!</p>
 
-    <button class="btn btn-connect" id="connectBtn">Connect MetaMask</button>
+    <div class="product-card" style="max-width: 600px; margin: 20px auto;">
+        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=600&q=80" alt="New Roastery">
+        <h3>Target: Opening a New Roastery in Almaty</h3>
+        <p class="description">We are raising funds to lease a new location. Every contributor gets 100 $CFT per 0.01 Test ETH.</p>
+        
+        <div style="background: #eee; border-radius: 10px; height: 20px; margin: 15px 0; overflow: hidden;">
+            <div id="progress-bar" style="background: #2b1b17; width: 45%; height: 100%; transition: width 0.5s;"></div>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 0.9em; margin-bottom: 15px;">
+            <span>Raised: <b id="raised-amount">4.5 ETH</b></span>
+            <span>Goal: <b>10 ETH</b></span>
+        </div>
 
-    <div class="info-box">
-        <span class="label">Wallet Address:</span>
-        <span id="address">0x00000...0000</span>
+        <div class="info-box" style="display: flex; gap: 10px; background: transparent; border: 1px solid #ddd;">
+            <input type="number" id="contributeAmount" placeholder="Amount in ETH" step="0.01" style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
+            <button class="btn-buy" id="contributeBtn" style="margin: 0;">Contribute</button>
+        </div>
     </div>
-
-    <div class="info-box">
-        <span class="label">Token Balance:</span>
-        <span id="cft-balance">0.00 CFT</span>
-    </div>
+</div>
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/ethers/dist/ethers.min.js"></script>
